@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Consulta pública sobre los criterios para considerar una inversión APR." />
+  <title>Comunidad Zenit · Consulta APR</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="overrides.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="Comunidad Zenit, inicio">COMUNIDAD ZENIT<span>·</span></a>
+      <div class="nav-links"><a href="#encuesta">Participar</a><a href="#resultados">Resultados</a></div>
+    </nav>
+    <div id="inicio" class="hero-content">
+      <p class="eyebrow">CONSULTA ABIERTA</p>
+      <h1>¿Qué entendemos por <em>APR</em>?</h1>
+      <div class="lead intro-copy">
+        <p>Gracias a Andrea hemos conocido el concepto de “Accidente Positivo de Riqueza” (APR).</p>
+        <p>Pero seguramente cada uno de nosotros tiene una idea ligeramente diferente del punto aproximado en el que una revaloración cruza el umbral de APR.</p>
+        <p>Comparte tu punto de vista sobre cuándo comienza un APR contestando las preguntas más abajo y luego revisa los resultados de la comunidad.</p>
+        <p><strong>¡Gracias por participar!</strong></p>
+      </div>
+      <a class="button button-light" href="#encuesta">Responder la encuesta <span aria-hidden="true">↓</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section id="encuesta" class="section form-section" aria-labelledby="form-title">
+      <div class="section-heading">
+        <p class="eyebrow">TU PERSPECTIVA</p>
+        <h2 id="form-title">Participa en la consulta</h2>
+        <p>Las preguntas marcadas con <strong>*</strong> son obligatorias. Tus respuestas se publicarán únicamente de forma agrupada.</p>
+      </div>
+
+      <form id="survey-form" novalidate>
+        <fieldset>
+          <legend>Tu criterio sobre APR <span aria-hidden="true">*</span></legend>
+          <div class="fields three-columns">
+            <label>Revalorización mínima <span>*</span><div class="input-suffix"><input id="gain" name="gain" type="number" min="0" max="10000" step="0.1" required inputmode="decimal" placeholder="Ej. 12"><b>%</b></div><small>Porcentaje de revalorización mínimo para considerarlo APR.</small></label>
+            <label>Plazo máximo <span>*</span><div class="input-suffix"><input id="term" name="term" type="number" min="0" max="600" step="1" required inputmode="numeric" placeholder="Ej. 12"><b>meses</b></div><small>Tiempo máximo para considerarlo APR.</small></label>
+            <label>Inversión mínima <span>*</span><div class="input-prefix"><b>€</b><input id="investment" name="investment" type="number" min="0" max="100000000" step="1" required inputmode="decimal" placeholder="Ej. 1000"></div><small>Cantidad mínima invertida.</small></label>
+          </div>
+          <label class="edition">Edición de Zenit <span>*</span><select id="edition" name="edition" required><option value="">Selecciona una edición</option><option>Zenit I</option><option>Zenit II</option><option>Zenit III</option><option>Zenit IV</option><option>Otra</option></select></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Sobre ti <small>Opcional</small></legend>
+          <div class="fields two-columns">
+            <label>Sexo<select id="gender" name="gender"><option value="">Prefiero no responder</option><option>Hombre</option><option>Mujer</option></select></label>
+            <label>Rango de edad<select id="age" name="age"><option value="">Prefiero no responder</option><option>&lt;20</option><option>20–29</option><option>30–39</option><option>40–49</option><option>50–59</option><option>60–69</option><option>70–79</option><option>&gt;80</option></select></label>
+          </div>
+        </fieldset>
+        <div class="form-footer"><p id="form-status" role="status"></p><button class="button button-dark" type="submit">Enviar respuesta <span aria-hidden="true">→</span></button></div>
+      </form>
+    </section>
+
+    <section id="resultados" class="section results-section" aria-labelledby="results-title">
+      <div class="section-heading results-heading"><div><p class="eyebrow">RESULTADOS ABIERTOS</p><h2 id="results-title">Lo que piensa la comunidad</h2></div><p id="response-count" class="response-count"></p></div>
+      <div class="filters" aria-label="Filtros de resultados">
+        <label>Edición<select id="filter-edition"><option value="">Todas las ediciones</option></select></label>
+        <label>Sexo<select id="filter-gender"><option value="">Todos</option><option>Hombre</option><option>Mujer</option><option value="Sin respuesta">Sin respuesta</option></select></label>
+        <label>Edad<select id="filter-age"><option value="">Todas las edades</option><option>&lt;20</option><option>20–29</option><option>30–39</option><option>40–49</option><option>50–59</option><option>60–69</option><option>70–79</option><option>&gt;80</option><option value="Sin respuesta">Sin respuesta</option></select></label>
+        <button id="clear-filters" class="text-button" type="button">Limpiar filtros</button>
+      </div>
+      <p id="empty-state" class="empty-state" hidden>No hay respuestas que coincidan con estos filtros.</p>
+      <div id="summary-cards" class="summary-cards"></div>
+      <div class="charts-grid">
+        <article class="chart-card scatter-card">
+          <div class="chart-header"><div><h3>Mapa de criterios APR</h3><span>Una respuesta, un punto</span></div><span class="chart-key"><i></i> Tamaño = inversión mínima</span></div>
+          <div id="scatter-chart" class="scatter-chart" role="img" aria-label="Diagrama de puntos de plazo máximo, ganancia mínima e inversión mínima"></div>
+        </article>
+        <article class="chart-card"><div class="chart-header"><h3>Revalorización mínima</h3><span>Distribución (%)</span></div><div id="gain-chart" class="bar-chart"></div></article>
+        <article class="chart-card"><div class="chart-header"><h3>Plazo máximo</h3><span>Distribución (meses)</span></div><div id="term-chart" class="bar-chart"></div></article>
+        <article class="chart-card"><div class="chart-header"><h3>Inversión mínima</h3><span>Distribución (€)</span></div><div id="investment-chart" class="bar-chart"></div></article>
+        <article class="chart-card"><div class="chart-header"><h3>Participación por edición</h3><span>Respuestas</span></div><div id="edition-chart" class="bar-chart"></div></article>
+      </div>
+      <p class="privacy-note">Los datos se muestran de forma agregada. No se publican respuestas individuales ni información identificativa.</p>
+    </section>
+
+    <section id="escala-zenit" class="zenit-scale" aria-labelledby="scale-title">
+      <div class="scale-intro">
+        <p class="eyebrow">UNA FORMA DE CONTARLO</p>
+        <h2 id="scale-title">La escala Zenit de APR</h2>
+        <p>Ahora que ya tenemos una posible referencia sobre dónde empieza un APR, podemos jugar a crear un símil con la escala Richter de terremotos: una escala Zenit de APR.</p>
+        <p>Así podríamos decir, por ejemplo: <strong>“Para el activo XYZ ha ocurrido un APR de intensidad IF en la escala Zenit.”</strong></p>
+        <p>Partiendo de una inversión inicial de 10.000 €, ¿cuál sería vuestra sugerencia de escala? Esta es una primera propuesta.</p>
+      </div>
+      <div class="scale-table-wrap">
+        <table class="scale-table">
+          <thead><tr><th>Revalorización</th><th>Código</th><th>Intensidad</th></tr></thead>
+          <tbody>
+            <tr><td>&gt; 10.000%</td><td><span class="intensity-code code-if">IF</span></td><td>Independencia financiera</td></tr>
+            <tr><td>5.000% – 9.999%</td><td><span class="intensity-code code-en">HHH</span></td><td>Triple H (¡Hostia!)</td></tr>
+            <tr><td>1.000% – 4.999%</td><td><span class="intensity-code code-gr">NC</span></td><td>No me lo puedo creer</td></tr>
+            <tr><td>500% – 999%</td><td><span class="intensity-code code-fr">QS</span></td><td>Que Subidón</td></tr>
+            <tr><td>APR mínimo – 499%</td><td><span class="intensity-code code-md">CM</span></td><td>Como Mola</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="scale-suggestions">
+        <div class="suggestion-form-copy"><h3>Propón tu escala</h3><p>Comparte tu sugerencia para que la comunidad pueda verla y debatirla.</p></div>
+        <form id="scale-suggestion-form" class="scale-suggestion-form">
+          <label for="scale-suggestion">Tu sugerencia de escala</label>
+          <textarea id="scale-suggestion" name="suggestion" rows="4" maxlength="500" required placeholder="Ej. Añadiría un nivel entre FR y GR a partir de una revalorización del 750%."></textarea>
+          <div class="suggestion-actions"><p id="suggestion-status" role="status"></p><button class="button button-light" type="submit">Publicar sugerencia <span aria-hidden="true">→</span></button></div>
+        </form>
+        <div class="community-suggestions">
+          <div class="suggestions-header"><h3>Sugerencias de la comunidad</h3><span id="suggestion-count"></span></div>
+          <div id="suggestion-list" class="suggestion-list" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>COMUNIDAD ZENIT · Consulta APR · <span id="year"></span></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
